@@ -1,4 +1,4 @@
-UIUC & Cornel License
+MIT License
 
 Copyright (c) 2018 Xiao Ma , David S. Kammer, Ahmed E. Elbanna
 
