@@ -1,0 +1,4 @@
+include_directories(${hybrid_fem_bie_SOURCE_DIR}/src)
+
+add_executable(tsunami_stress_vary tsunami_stress_vary.cc)
+target_link_libraries(tsunami_stress_vary hybrid_fem_bie)
