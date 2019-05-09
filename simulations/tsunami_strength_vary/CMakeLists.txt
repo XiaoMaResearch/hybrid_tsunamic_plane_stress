@@ -1,4 +1,0 @@
-include_directories(${hybrid_fem_bie_SOURCE_DIR}/src)
-
-add_executable(tsunami_strength_vary tsunami_strength_vary.cc)
-target_link_libraries(tsunami_strength_vary hybrid_fem_bie)

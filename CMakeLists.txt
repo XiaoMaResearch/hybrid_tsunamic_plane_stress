@@ -33,19 +33,6 @@ add_subdirectory(src)
 
 # ------------------------------------------------------
 # tests
-option(WI_TESTS "tests" ON)
-
-if(WI_TESTS)
-  add_subdirectory(tests)
-endif()
-
-# junk
-option(WI_JUNK "junk" ON)
-
-if(WI_JUNK)
-  add_subdirectory(junk)
-endif()
-# parallel _simualtion
 
 # ------------------------------------------------------
 # add simulation folder
