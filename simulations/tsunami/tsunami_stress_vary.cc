@@ -38,13 +38,13 @@ double time_bie;
 int main() {
     time_fem = 0.0;
     // Domain Size
-    double x_min = -150e3;
-    double x_max = 150e3;
-    double y_min = -1.0e3;
-    double y_max = 1.0e3;
+    double x_min = -50e3;
+    double x_max = 50e3;
+    double y_min = -5.0e3;
+    double y_max = 5.0e3;
     int dim = 2.0;
-    double dx = 100;
-    double dy = 100;
+    double dx = 50;
+    double dy = 50;
     int nx_el = (x_max-x_min)/dx;
     int ny = (y_max-y_min)/dy;
     MatrixXd Node = MatrixXd::Zero((nx_el+1)*(ny+1),2);
@@ -97,7 +97,7 @@ int main() {
     // Reyleigh Damping
     double beta =0.1;
     double q = beta*dt;
-    double time_run = 1;
+    double time_run = 8;
     int numt = time_run/dt;
    // numt =10;
     
@@ -215,10 +215,6 @@ int main() {
     
     
     double tau_0 =(0.6*50e6+0.3*50e6*S)/(1+S);
-    double tau_d =0.3*50e6;
-    
-    double mu_s_low  = (0.625*tau_0*S -tau_d +0.625*tau_0)/50e6;
-    double mu_s_high = (0.725*tau_0*S -tau_d +0.725*tau_0)/50e6;
 
     for (int k=0 ; k<nx_faults[0]; k++)
     {
@@ -226,82 +222,6 @@ int main() {
         {
             T_0[0](2*k) = 31.0e6;
         }
-        else if (x_main(k)>=25.0e3&&x_main(k)<=50.0e3)
-        {
-          //  T_0[0](2*k) =0.625*tau_0;
-            mu_s[0](k) = mu_s_low;
-        }
-        else if (x_main(k)>50.0e3&&x_main(k)<=75.0e3)
-        {
-           // T_0[0](2*k) =0.725*tau_0;
-            mu_s[0](k) = mu_s_high;
-        }
-        else if (x_main(k)>75.0e3&&x_main(k)<=100.0e3)
-        {
-           // T_0[0](2*k) =0.625*tau_0;
-            mu_s[0](k) = mu_s_low;
-        }
-        else if (x_main(k)>100.0e3&&x_main(k)<=125.0e3)
-        {
-           // T_0[0](2*k) =0.725*tau_0;
-            mu_s[0](k) = mu_s_high;
-        }
-        else if (x_main(k)>125.0e3&&x_main(k)<=150.0e3)
-        {
-           // T_0[0](2*k) =0.625*tau_0;
-            mu_s[0](k) = mu_s_low;
-            
-        }
-        else if (x_main(k)>150.0e3&&x_main(k)<=175.0e3)
-        {
-            
-            //T_0[0](2*k) =0.725*tau_0;
-            mu_s[0](k) = mu_s_high;
-        }
-        else if (x_main(k)>175.0e3&&x_main(k)<=200.0e3)
-        {
-            // T_0[0](2*k) =0.625*tau_0;
-            mu_s[0](k) = mu_s_low;
-        }
-        else if (x_main(k)>200.0e3&&x_main(k)<=225.0e3)
-        {
-            //T_0[0](2*k) =0.725*tau_0;
-            mu_s[0](k) = mu_s_high;
-        }
-        else if (x_main(k)>225.0e3&&x_main(k)<=250.0e3)
-        {
-            //T_0[0](2*k) =0.625*tau_0;
-            mu_s[0](k) = mu_s_low;
-
-        }
-        else if (x_main(k)>250.0e3&&x_main(k)<=275.0e3)
-        {
-           // T_0[0](2*k) =0.725*tau_0;
-            mu_s[0](k) = mu_s_high;
-
-        }
-        else if (x_main(k)>275.0e3&&x_main(k)<=300.0e3)
-        {
-           // T_0[0](2*k) =0.625*tau_0;
-            mu_s[0](k) = mu_s_low;
-            
-
-        }
-        else if (x_main(k)>300.0e3&&x_main(k)<=350.0e3)
-        {
-           // T_0[0](2*k) =0.725*tau_0;
-            mu_s[0](k) = mu_s_high;
-
-        }
-      
-//        else if (x_main(k)>55.0e3&&x_main(k)<=70.0e3)
-//        {
-//            T_0[0](2*k) =0.6*tau_0;
-//        }
-//        else if (x_main(k)>70.0e3&&x_main(k)<=200.0e3)
-//        {
-//            T_0[0](2*k) =0.7*tau_0;
-//        }
         else
         {
             T_0[0](2*k) = tau_0;
@@ -559,15 +479,15 @@ int main() {
             file.close();
         }
 //
-//        if (j%20==1)
-//        {
-////            file.open("results/u_n.bin",ios::binary | ios::app);
-////            file.write((char*)(u_n.data()),u_n.size()*sizeof(double));
-////            file.close();
-//            file.open("results/v_n.bin",ios::binary | ios::app);
-//            file.write((char*)(v_n.data()),v_n.size()*sizeof(double));
+        if (j%50==1)
+        {
+//            file.open("results/u_n.bin",ios::binary | ios::app);
+//            file.write((char*)(u_n.data()),u_n.size()*sizeof(double));
 //            file.close();
-//        }
+            file.open("results/v_n.bin",ios::binary | ios::app);
+            file.write((char*)(v_n.data()),v_n.size()*sizeof(double));
+            file.close();
+        }
 //        //  Adding virtual boundary information
 //        maplocal(BIE_top_surf_index,u_n,BIE_top_u_n);
 //        maplocal(BIE_top_surf_index,v_n,BIE_top_v_n);
@@ -589,19 +509,19 @@ int main() {
 //        file.close();
 ////
      //   cal_ezz(coord, E, nu, ezz_out, n_el, index_store, q, u_n);
-//        if (j%100==1)
-//        {
-//            cal_ezz(coord, E, nu, ezz_out, exx_out, eyy_out, n_el, index_store, q, u_n);
-//            file.open("results/ezz.bin",ios::binary | ios::app);
-//            file.write((char*)(ezz_out.data()),ezz_out.size()*sizeof(double));
-//            file.close();
+        if (j%50==1)
+        {
+            cal_ezz(coord, E, nu, ezz_out, exx_out, eyy_out, n_el, index_store, q, u_n);
+            file.open("results/ezz.bin",ios::binary | ios::app);
+            file.write((char*)(ezz_out.data()),ezz_out.size()*sizeof(double));
+            file.close();
 //            file.open("results/exx.bin",ios::binary | ios::app);
 //            file.write((char*)(exx_out.data()),exx_out.size()*sizeof(double));
 //            file.close();
 //            file.open("results/eyy.bin",ios::binary | ios::app);
 //            file.write((char*)(eyy_out.data()),eyy_out.size()*sizeof(double));
 //            file.close();
-//        }
+        }
         printf("Simulation time = %f\n",time(j));
         //  double end_t = omp_get_wtime();
         // std::cout<<"time_cpu_t="<<end_t-start<<std::endl;
