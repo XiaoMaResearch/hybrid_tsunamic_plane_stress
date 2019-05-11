@@ -20,9 +20,8 @@ fwrite(FileID,Node','double','ieee-be');
 
 
 
-%Element = load([folder '/Element.txt']);
 
-
+%% Cell data output 
 NElem = size(Element,1);
 fprintf(FileID, 'CELLS %i %i\n', NElem, (2^dims+1)*NElem);
 if dims == 2
