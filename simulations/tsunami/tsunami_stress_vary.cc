@@ -90,14 +90,11 @@ int main() {
     double v_s_LVFZ = v_s;
     double G_LVFZ= pow(v_s_LVFZ,2)*density;
     double Lambda_LVFZ = pow(v_p_LVFZ,2)*density-2.0*G_LVFZ;
-    double E_LVFZ  = G_LVFZ*(3.0*Lambda_LVFZ+2.0*G_LVFZ)/(Lambda_LVFZ+G_LVFZ);
-    double nu_LVFZ = Lambda_LVFZ/(2.0*(Lambda_LVFZ+G_LVFZ));
-    //dt = 0.0025;
-    //dt = 0.000625;
+  
     // Reyleigh Damping
-    double beta =0.1;
+    double beta =0.2;
     double q = beta*dt;
-    double time_run = 8;
+    double time_run = 1;
     int numt = time_run/dt;
    // numt =10;
     
@@ -105,10 +102,7 @@ int main() {
     time_output<<time_run<<"\n";
     time_output<<dt<<"\n";
     time_output<<numt<<std::endl;
-  // numt = 2;
-    //numt = 200;
-    //numt = 3;
-    //numt =4;
+
     VectorXd time = dt*VectorXd::LinSpaced(numt,1,numt);
     // Slip weakening friction parameters
     double Dc = 0.2;
