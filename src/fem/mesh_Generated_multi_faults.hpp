@@ -17,7 +17,7 @@
 #include "share_header.hpp"
 using namespace Eigen;
 
-void mesh_Generated_multi_faults(int x_min, int x_max ,int y_min, int y_max, double dx , double dy, int nx, int ny, MatrixXd &Nodes ,MatrixXi_rm &Element, ArrayXi &BIE_top_surf_nodes, ArrayXi &BIE_bot_surf_nodes, MatrixXd &fault_pos, std::vector<std::vector<int>> &fault_nodes);
+void mesh_Generated_multi_faults(double x_min, double x_max ,double y_min, double y_max, double dx , double dy, int nx, int ny, MatrixXd &Nodes ,MatrixXi_rm &Element, ArrayXi &BIE_top_surf_nodes, ArrayXi &BIE_bot_surf_nodes, MatrixXd &fault_pos, std::vector<std::vector<int>> &fault_nodes);
 
 
 

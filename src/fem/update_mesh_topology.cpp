@@ -27,7 +27,7 @@ void update_mesh_topology(MatrixXd &Nodes, MatrixXi_rm &Element,std::vector<int>
             NodesElem[Element(i,j)].row(NodesElem[Element(i,j)].rows()-1) << i, j;
         }
     }
-   // double end = omp_get_wtime();
+       // double end = omp_get_wtime();
    // std::cout<<"Loop_1="<<end-start<<std::endl;
     // Set the new fault_surf_nodes_new numbers (start from n_nodes)
     //start = omp_get_wtime();

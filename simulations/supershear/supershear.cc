@@ -23,7 +23,7 @@
 #include "Getplastic.hpp"
 #include "cal_Bmat.hpp"
 #include "Slip_Weakening_lumpM_with_buffer.hpp"
-#include <sys/stat.h>
+
 
 //#include <omp.h>
 using namespace Eigen;
@@ -36,29 +36,27 @@ void read_matrix(std::string fileName, Eigen::MatrixXd &outputMat);
 double time_fem=0;
 double time_bie;
 int main() {
-    mkdir("results",
-          S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
-    bool vn_output_ON = true;
-    bool ezz_output_ON = true;
+    bool vn_output_ON = false;
+    bool ezz_output_ON = false;
     int output_freq = 100;
     
-    double time_run = 5;
-    double S = 2.0;
-    double sigma_abs_const = 50e6;
+    double time_run = 1e-4;
+    double S = 0.31;
+    double sigma_abs_const = 17.59e6;
     // Slip weakening friction parameters
-    double Dc = 0.2;
+    double Dc = 30e-6;
     double mu_d_const = 0.25;
     double mu_s_const = 0.65;
 
     time_fem = 0.0;
     // Domain Size
-    double x_min = -20e3;
-    double x_max = 20e3;
-    double y_min = -1.0e3;
-    double y_max = 1.0e3;
+    double x_min = -200.0e-3;
+    double x_max = 200.0e-3;
+    double y_min = -100e-3;
+    double y_max = 100e-3;
     int dim = 2.0;
-    double dx = 25;
-    double dy = 25;
+    double dx = 1e-3;
+    double dy = 1e-3;
     int nx_el = (x_max-x_min)/dx;
     int ny = (y_max-y_min)/dy;
     MatrixXd Node = MatrixXd::Zero((nx_el+1)*(ny+1),2);
@@ -90,10 +88,14 @@ int main() {
     double density = 2670.0;
     double v_s =3.464e3;
     double v_p = 6.0e3;
-    double G= pow(v_s,2)*density;
-    double Lambda = pow(v_p,2)*density-2.0*G;
-    double E  = G*(3.0*Lambda+2.0*G)/(Lambda+G);
-    double nu = Lambda/(2.0*(Lambda+G));
+    //double G= pow(v_s,2)*density;
+    double G = 3.45e9;
+    double nu = 0.25;
+    double E =2.0*G*(1.0+nu);
+    
+    //double Lambda = pow(v_p,2)*density-2.0*G;
+    //double E  = G*(3.0*Lambda+2.0*G)/(Lambda+G);
+    //double nu = Lambda/(2.0*(Lambda+G));
     double h_star = G/((mu_s_const-mu_d_const)*sigma_abs_const/Dc);
     std::cout<<"h**="<< h_star<<"\n";
     std::cout<<"number of elements resolving the nulceation zone = " << int(h_star/(dx))<<std::endl;
@@ -223,7 +225,7 @@ int main() {
 
     for (int k=0 ; k<nx_faults[0]; k++)
     {
-        if ((x_main(k)<=(0.0+0.2e3))&&(x_main(k)>=(0.0-0.2e3)))
+        if ((x_main(k)<=(0.0+0.02))&&(x_main(k)>=(0.0-0.02)))
         {
             T_0[0](2*k) = sigma_abs_const*(mu_s_const)*(1.01);
         }
@@ -517,7 +519,7 @@ int main() {
                 //            file.close();
             }
         }
-        printf("Simulation time = %f\n",time(j));
+        printf("Simulation time = %e\n",time(j));
     }
     return 0;
 }

@@ -10,16 +10,18 @@
 //#include <omp.h>
 #include <numeric>
 #include <vector>
-void mesh_Generated_multi_faults(int x_min, int x_max ,int y_min, int y_max, double dx , double dy, int nx, int ny, MatrixXd &Nodes ,MatrixXi_rm &Element, ArrayXi &BIE_top_surf_nodes, ArrayXi &BIE_bot_surf_nodes, MatrixXd &fault_pos, std::vector<std::vector<int>> &fault_nodes)
+void mesh_Generated_multi_faults(double x_min, double x_max ,double y_min, double y_max, double dx , double dy, int nx, int ny, MatrixXd &Nodes ,MatrixXi_rm &Element, ArrayXi &BIE_top_surf_nodes, ArrayXi &BIE_bot_surf_nodes, MatrixXd &fault_pos, std::vector<std::vector<int>> &fault_nodes)
 {
     Meshrectangular(x_min, x_max ,y_min, y_max, dx, dx, nx, ny, Nodes, Element);
     std::cout<< "Done"<<std::endl;    
 // Getting fault nodes
     //std::vector<int> fault_surf_nodes_new;
     double TOL = 1e-13;
+    std::cout<<"fault_pos="<<fault_pos<<std::endl;
     //#pragma omp parallel for
     for (int j = 0 ; j<fault_pos.rows(); j++)
     {
+
      double x_L = fault_pos(j,1);
      double x_R = fault_pos(j,2);
      int    n_fault = (x_R-x_L)/dx+1;
