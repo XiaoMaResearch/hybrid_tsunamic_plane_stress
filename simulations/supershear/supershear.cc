@@ -36,11 +36,11 @@ void read_matrix(std::string fileName, Eigen::MatrixXd &outputMat);
 double time_fem=0;
 double time_bie;
 int main() {
-    bool vn_output_ON = false;
-    bool ezz_output_ON = false;
+    bool vn_output_ON = true;
+    bool ezz_output_ON = true;
     int output_freq = 100;
     
-    double time_run = 1e-4;
+    double time_run = 2e-4;
     double S = 0.31;
     double sigma_abs_const = 17.59e6;
     // Slip weakening friction parameters
@@ -50,13 +50,13 @@ int main() {
 
     time_fem = 0.0;
     // Domain Size
-    double x_min = -200.0e-3;
-    double x_max = 200.0e-3;
-    double y_min = -100e-3;
-    double y_max = 100e-3;
+    double x_min = -300.0e-3;
+    double x_max = 300.0e-3;
+    double y_min = -20e-3;
+    double y_max = 20e-3;
     int dim = 2.0;
-    double dx = 1e-3;
-    double dy = 1e-3;
+    double dx = 5.0e-4;
+    double dy = 5.0e-4;
     int nx_el = (x_max-x_min)/dx;
     int ny = (y_max-y_min)/dy;
     MatrixXd Node = MatrixXd::Zero((nx_el+1)*(ny+1),2);
